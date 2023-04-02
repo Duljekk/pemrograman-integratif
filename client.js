@@ -8,29 +8,30 @@ const MahasiswaPackage = grpc.loadPackageDefinition(packageDef).MahasiswaPackage
 
 const client = new MahasiswaPackage.MahasiswaService('localhost:3000', grpc.credentials.createInsecure());
 
-const id_mahasiswa = 1;
-const nama = 'Rendy Anfi Yudha';
-const nrp = '5027211006';
-const nilai = '94';
+const id_mahasiswa = '';
+const nama = 'Abdul Zaki Syahrul Rahmat';
+const nrp = '5027211020';
+const nilai = '86';
 
-// client.AddMahasiswa({ id_mahasiswa, nama, nrp, nilai }, (err, response) => {
-//   if (err) {
-//     console.error(err);
-//     return;
-//   }
-// });
+client.AddMahasiswa({ id_mahasiswa, nama, nrp, nilai }, (err, response) => {
+  if (err) {
+    console.error(err);
+    return;
+  }
+});
 
-client.GetMahasiswa({ id_mahasiswa }, (err, response) => {
-    if (err) {
-      console.error(err);
-      return;
-    }
-    console.log(response);
-  });
+// client.GetMahasiswa({ id_mahasiswa }, (err, response) => {
+//     if (err) {
+//       console.error(err);
+//       return;
+//     }
+//     console.log(response);
+//   });
 
   
 // const mahasiswaId = { id_mahasiswa: 1 };
-// client.DeleteMahasiswa(mahasiswaId, (error, response) => {
+
+// client.DeleteMahasiswa({ id_mahasiswa }, (error, response) => {
 //   if (error) {
 //     console.error(error);
 //     return;

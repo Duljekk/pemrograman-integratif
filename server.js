@@ -31,6 +31,7 @@ server.addService(MahasiswaPackage.MahasiswaService.service, {
       }
     );
   },
+
   GetMahasiswa(call, callback) {
     const id_mahasiswa = call.request.id_mahasiswa;
     connection.query(
@@ -56,7 +57,27 @@ server.addService(MahasiswaPackage.MahasiswaService.service, {
       }
     );
   },
-  DeleteMahasiswa: deleteMahasiswa,
+
+  DeleteMahasiswa(call, callback) {
+    const id_mahasiswa = call.request.id_mahasiswa;
+    connection.query(
+      `DELETE FROM mahasiswa WHERE id_mahasiswa = 1`,
+      [id_mahasiswa],
+      (error, results) => {
+        if (error) {
+          console.error('Error:', error);
+          callback(error, null);
+          return;
+        }
+        // if (results.affectedRows === 0) {
+        //   callback(`Mahasiswa dengan id ${id_mahasiswa} tidak ditemukan`, null);
+        //   return;
+        // }
+        callback(null, {});
+      }
+    );
+  }
+  
 });
 
 server.bindAsync('127.0.0.1:3000', grpc.ServerCredentials.createInsecure(), (error, port) => {
@@ -121,24 +142,24 @@ const connection = mysql.createConnection({
   //   );
   // }
 
-  function deleteMahasiswa(call, callback) {
-    const mahasiswaId = call.request.id;
+  // function deleteMahasiswa(call, callback) {
+  //   const mahasiswaId = call.request.id;
   
-    connection.query(
-      `DELETE FROM mahasiswa WHERE id_mahasiswa = ?`,
-      [mahasiswaId],
-      (error, results) => {
-        if (error) {
-          console.error('Error:', error);
-          callback(error, null);
-          return;
-        }
-        if (results.affectedRows === 0) {
-          callback(`Mahasiswa dengan id ${mahasiswaId} tidak ditemukan`, null);
-          return;
-        }
-        callback(null, {});
-      }
-    );
-  }
+  //   connection.query(
+  //     `DELETE FROM mahasiswa WHERE id_mahasiswa = ?`,
+  //     [mahasiswaId],
+  //     (error, results) => {
+  //       if (error) {
+  //         console.error('Error:', error);
+  //         callback(error, null);
+  //         return;
+  //       }
+  //       if (results.affectedRows === 0) {
+  //         callback(`Mahasiswa dengan id ${mahasiswaId} tidak ditemukan`, null);
+  //         return;
+  //       }
+  //       callback(null, {});
+  //     }
+  //   );
+  // }
   
