@@ -35,7 +35,7 @@ server.addService(MahasiswaPackage.MahasiswaService.service, {
   GetMahasiswa(call, callback) {
     const id_mahasiswa = call.request.id_mahasiswa;
     connection.query(
-      `SELECT * FROM mahasiswa WHERE id_mahasiswa = 2`,
+      `SELECT * FROM mahasiswa WHERE id_mahasiswa = 9`,
       [id_mahasiswa],
       (error, results) => {
         if (error) {
@@ -61,7 +61,7 @@ server.addService(MahasiswaPackage.MahasiswaService.service, {
   DeleteMahasiswa(call, callback) {
     const id_mahasiswa = call.request.id_mahasiswa;
     connection.query(
-      `DELETE FROM mahasiswa WHERE id_mahasiswa = 1`,
+      `DELETE FROM mahasiswa WHERE id_mahasiswa = 24`,
       [id_mahasiswa],
       (error, results) => {
         if (error) {
@@ -73,7 +73,7 @@ server.addService(MahasiswaPackage.MahasiswaService.service, {
           callback(`Mahasiswa dengan id ${id_mahasiswa} tidak ditemukan`, null);
           return;
         }
-        callback(null, {});
+        callback(null, 'Mahasiswa dengan ${id_mahasiswa} berhasil dihapus');
       }
     );
   }
@@ -93,73 +93,4 @@ const connection = mysql.createConnection({
   password: '',
   database: 'pemrograman_integratif',
 });
-
-// function AddMahasiswa(call, callback) {
-    
-//     const id_mahasiswa = call.request.id_mahasiswa;
-//     const nama = call.request.nama;
-//     const nrp = call.request.nrp;
-//     const nilai = call.request.nilai;
-  
-//     connection.query(
-//       `INSERT INTO mahasiswa (id_mahasiswa, nama, nrp, nilai) VALUES (?, ?, ?, ?)`,
-//       [id_mahasiswa, nama, nrp, nilai],
-//       (error) => {
-//         if (error) {
-//           console.error('Error:', error);
-//           callback(error, null);
-//           return;
-//         }
-  
-//         callback(null, { message: 'Mahasiswa berhasil ditambahkan' });
-//       }
-//     );
-//   }
-
-  // function GetMahasiswa(call, callback) {
-  //   const mahasiswaId = call.request.id_mahasiswa;
-  //   connection.query(
-  //     `SELECT * FROM mahasiswa WHERE id_mahasiswa = ?`,
-  //     [mahasiswaId],
-  //     (error, results) => {
-  //       if (error) {
-  //         console.error('Error:', error);
-  //         callback(error, null);
-  //         return;
-  //       }
-  //       if (results.length === 0) {
-  //         callback(`Mahasiswa dengan id ${mahasiswaId} tidak ditemukan`, null);
-  //         return;
-  //       }
-  //       const mahasiswaItem = results[0];
-  //       callback(null, {
-  //         id_mahasiswa: mahasiswaItem.id_mahasiswa,
-  //         nama: mahasiswaItem.nama,
-  //         nrp: mahasiswaItem.nrp,
-  //         nilai: mahasiswaItem.nilai
-  //       });
-  //     }
-  //   );
-  // }
-
-  // function deleteMahasiswa(call, callback) {
-  //   const mahasiswaId = call.request.id;
-  
-  //   connection.query(
-  //     `DELETE FROM mahasiswa WHERE id_mahasiswa = ?`,
-  //     [mahasiswaId],
-  //     (error, results) => {
-  //       if (error) {
-  //         console.error('Error:', error);
-  //         callback(error, null);
-  //         return;
-  //       }
-  //       if (results.affectedRows === 0) {
-  //         callback(`Mahasiswa dengan id ${mahasiswaId} tidak ditemukan`, null);
-  //         return;
-  //       }
-  //       callback(null, {});
-  //     }
-  //   );
-  // }
   

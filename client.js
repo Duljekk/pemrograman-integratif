@@ -8,10 +8,10 @@ const MahasiswaPackage = grpc.loadPackageDefinition(packageDef).MahasiswaPackage
 
 const client = new MahasiswaPackage.MahasiswaService('localhost:3000', grpc.credentials.createInsecure());
 
-const id_mahasiswa = '';
-const nama = 'Abdul Zaki Syahrul Rahmat';
-const nrp = '5027211020';
-const nilai = '86';
+// const id_mahasiswa = '';
+// const nama = 'Abdul Zaki Syahrul Rahmat';
+// const nrp = '5027211020';
+// const nilai = '86';
 
 // client.AddMahasiswa({ id_mahasiswa, nama, nrp, nilai }, (err, response) => {
 //   if (err) {
@@ -20,7 +20,10 @@ const nilai = '86';
 //   }
 // });
 
-client.GetMahasiswa({ id_mahasiswa }, (err, response) => {
+const id_mahasiswa = 24;
+const request = { id_mahasiswa: id_mahasiswa };
+
+client.GetMahasiswa(request, (err, response) => {
     if (err) {
       console.error(err);
       return;
