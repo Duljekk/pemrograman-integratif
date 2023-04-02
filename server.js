@@ -35,7 +35,7 @@ server.addService(MahasiswaPackage.MahasiswaService.service, {
   GetMahasiswa(call, callback) {
     const id_mahasiswa = call.request.id_mahasiswa;
     connection.query(
-      `SELECT * FROM mahasiswa WHERE id_mahasiswa = 1`,
+      `SELECT * FROM mahasiswa WHERE id_mahasiswa = 2`,
       [id_mahasiswa],
       (error, results) => {
         if (error) {
@@ -43,10 +43,10 @@ server.addService(MahasiswaPackage.MahasiswaService.service, {
           callback(error, null);
           return;
         }
-        // if (results.length === 0) {
-        //   callback(`Mahasiswa dengan id ${id_mahasiswa} tidak ditemukan`, null);
-        //   return;
-        // }
+        if (results.length === 0) {
+          callback(`Mahasiswa dengan id ${id_mahasiswa} tidak ditemukan`, null);
+          return;
+        }
         const mahasiswa = results[0];
         callback(null, {
           id_mahasiswa: mahasiswa.id_mahasiswa,
@@ -69,10 +69,10 @@ server.addService(MahasiswaPackage.MahasiswaService.service, {
           callback(error, null);
           return;
         }
-        // if (results.affectedRows === 0) {
-        //   callback(`Mahasiswa dengan id ${id_mahasiswa} tidak ditemukan`, null);
-        //   return;
-        // }
+        if (results.affectedRows === 0) {
+          callback(`Mahasiswa dengan id ${id_mahasiswa} tidak ditemukan`, null);
+          return;
+        }
         callback(null, {});
       }
     );

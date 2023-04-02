@@ -13,20 +13,20 @@ const nama = 'Abdul Zaki Syahrul Rahmat';
 const nrp = '5027211020';
 const nilai = '86';
 
-client.AddMahasiswa({ id_mahasiswa, nama, nrp, nilai }, (err, response) => {
-  if (err) {
-    console.error(err);
-    return;
-  }
-});
+// client.AddMahasiswa({ id_mahasiswa, nama, nrp, nilai }, (err, response) => {
+//   if (err) {
+//     console.error(err);
+//     return;
+//   }
+// });
 
-// client.GetMahasiswa({ id_mahasiswa }, (err, response) => {
-//     if (err) {
-//       console.error(err);
-//       return;
-//     }
-//     console.log(response);
-//   });
+client.GetMahasiswa({ id_mahasiswa }, (err, response) => {
+    if (err) {
+      console.error(err);
+      return;
+    }
+    console.log(response);
+  });
 
   
 // const mahasiswaId = { id_mahasiswa: 1 };
