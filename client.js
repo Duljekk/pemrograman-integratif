@@ -1,21 +1,21 @@
 const grpc = require('@grpc/grpc-js')
 const protoLoader = require('@grpc/proto-loader')
 
-let PROTO_PATH = 'buku.proto'
+let PROTO_PATH = 'mahasiswa.proto'
 
 const packageDef = protoLoader.loadSync(PROTO_PATH, {});
 const grpcObject = grpc.loadPackageDefinition(packageDef)
 
-const booksPackage = grpcObject.booksPackage
+const MahasiswaPackage = grpcObject.MahasiswaPackage
 
-const client = new booksPackage.newService('localhost:3000', grpc.credentials.createInsecure());
+const client = new MahasiswaPackage.MahasiswaService('localhost:3000', grpc.credentials.createInsecure());
 
-const id = '';
-const title = 'Operation Overlord';
-const author = 'Dolor Sit';
-const published_year = '1944';
+const id_mahasiswa = '';
+const nama = 'Adimasdefatra Bimasena';
+const nrp = '5027211040';
+const nilai = '99';
 
-client.addBooks({ id, title, author, published_year }, (err, response) => {
+client.addMahasiswa({ id_mahasiswa, nama, nrp, nilai }, (err, response) => {
   if (err) {
     console.error(err);
     return;

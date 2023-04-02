@@ -1,0 +1,35 @@
+syntax = "proto3";
+
+// Object 
+
+package MahasiswaPackage;
+
+message Mahasiswa {
+  int32 id_mahasiswa = 1;
+  string nama = 2;
+  string nrp = 3;
+  double nilai = 4;
+}
+
+message MahasiswaList {
+  repeated Mahasiswa mahasiswa = 1;
+}
+
+message MahasiswaId {
+  int32 id_mahasiswa = 1;
+}
+
+message Empty {}
+
+// Service 
+service MahasiswaService {
+  // Create 
+  rpc AddMahasiswa (Mahasiswa) returns (Mahasiswa) {}
+  // Read 
+  rpc GetAll (Empty) returns (MahasiswaList) {}
+  rpc GetMahasiswa (MahasiswaId) returns (Mahasiswa) {}
+  // Update
+  rpc EditMahasiswa (Mahasiswa) returns (Mahasiswa) {}
+  // Delete
+  rpc DeleteMahasiswa (MahasiswaId) returns (Empty) {}
+}

@@ -2,17 +2,17 @@ const grpc = require('@grpc/grpc-js');
 const protoLoader = require('@grpc/proto-loader');
 const mysql = require('mysql2');
 
-let PROTO_PATH = 'buku.proto';
+let PROTO_PATH = 'mahasiswa.proto';
 
 const packageDef = protoLoader.loadSync(PROTO_PATH, {});
 const grpcObject = grpc.loadPackageDefinition(packageDef);
 
-const booksPackage = grpcObject.booksPackage;
+const mahasiswaPackage = grpcObject.MahasiswaPackage;
 
 const server = new grpc.Server();
 
-server.addService(booksPackage.newService.service, {
-  addBooks: addBooks,
+server.addService(mahasiswaPackage.MahasiswaService.service, {
+  addMahasiswa: addMahasiswa,
 });
 
 server.bindAsync('127.0.0.1:3000', grpc.ServerCredentials.createInsecure(), (error, port) => {
@@ -29,24 +29,24 @@ const connection = mysql.createConnection({
   database: 'pemrograman_integratif',
 });
 
-function addBooks(call, callback) {
+function addMahasiswa(call, callback) {
     
-    const id = call.request.id;
-    const title = call.request.title;
-    const author = call.request.author;
-    const published_year = parseInt(call.request.published_year, 11);
+    const id_mahasiswa = call.request.id_mahasiswa;
+    const nama = call.request.nama;
+    const nrp = call.request.nrp;
+    const nilai = call.request.nilai;
   
     connection.query(
-      `INSERT INTO books (id, title, author, published_year) VALUES (?, ?, ?, ?)`,
-      [id, title, author, published_year],
-      (error, results, fields) => {
+      `INSERT INTO mahasiswa (id_mahasiswa, nama, nrp, nilai) VALUES (?, ?, ?, ?)`,
+      [id_mahasiswa, nama, nrp, nilai],
+      (error) => {
         if (error) {
           console.error('Error:', error);
           callback(error, null);
           return;
         }
   
-        callback(null, { message: 'Book added successfully' });
+        callback(null, { message: 'Mahasiswa berhasil ditambahkan' });
       }
     );
   }
