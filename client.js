@@ -71,7 +71,7 @@ rl.question('Choose a function to call (ADD/GET/GETALL/UPDATE/DELETE): ', functi
       rl.close();
     });
     } else {
-    console.error('Invalid function name. Please choose ADD, GET, or DELETE.');
+    console.error('Invalid function name. Please choose ADD, GET, GETALL, UPDATE, or DELETE.');
     rl.close();
   }
 });
