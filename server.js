@@ -29,14 +29,16 @@ server.addService(MahasiswaPackage.MahasiswaService.service, {
           return;
         }
   
-        callback(null, { message: 'Mahasiswa berhasil ditambahkan' });
+        callback(null, {});
       }
     );
   },
 
   GetMahasiswa(call, callback) {
     const nama = call.request.nama;
+
     console.log(`Received GET request for nama = ${nama}`);
+
     connection.query(
       `SELECT * FROM mahasiswa WHERE nama = ?`,
       [nama],
@@ -80,13 +82,14 @@ server.addService(MahasiswaPackage.MahasiswaService.service, {
           callback(`Mahasiswa dengan nama ${nama} tidak ditemukan`, null);
           return;
         }
-        callback(null, { message: 'Mahasiswa berhasil diupdate' });
+        callback(null, {});
       }
     );
   },
 
   DeleteMahasiswa(call, callback) {
     const nama = call.request.nama;
+
     console.log(`Received DELETE request for nama = ${nama}`);
 
     connection.query(
@@ -102,7 +105,7 @@ server.addService(MahasiswaPackage.MahasiswaService.service, {
           callback(`Mahasiswa dengan nama ${nama} tidak ditemukan`, null);
           return;
         }
-        callback(null, `Mahasiswa dengan ${nama} berhasil dihapus`);
+        callback(null, {});
       }
     );
   }

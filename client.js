@@ -17,7 +17,7 @@ const rl = readline.createInterface({
 rl.question('Choose a function to call (ADD/GET/UPDATE/DELETE): ', function(functionName) {
   if (functionName === 'ADD') {
     rl.question('Enter the Mahasiswa details in this format: nama,nrp,nilai\n', function(mahasiswaInput) {
-      const [ nama, nrp, nilai] = mahasiswaInput.split(',');
+      const [ nama, nrp, nilai ] = mahasiswaInput.split(',');
       client.AddMahasiswa({ nama, nrp, nilai }, (err, response) => {
         if (err) {
           console.error(err);
@@ -40,7 +40,7 @@ rl.question('Choose a function to call (ADD/GET/UPDATE/DELETE): ', function(func
     });
   } else if (functionName === 'UPDATE') {
     rl.question('Enter the Mahasiswa details in this format: nama,nilai\n', function(mahasiswaInput) {
-      const [ nama, nilai] = mahasiswaInput.split(',');
+      const [ nama, nilai ] = mahasiswaInput.split(',');
       client.UpdateMahasiswa({ nama, nilai }, (err, response) => {
         if (err) {
           console.error(err);
