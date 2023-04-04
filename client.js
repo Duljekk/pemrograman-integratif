@@ -1,5 +1,6 @@
 const grpc = require('@grpc/grpc-js')
 const protoLoader = require('@grpc/proto-loader')
+const readline = require('readline');
 
 let PROTO_PATH = 'mahasiswa.proto'
 
@@ -8,38 +9,60 @@ const MahasiswaPackage = grpc.loadPackageDefinition(packageDef).MahasiswaPackage
 
 const client = new MahasiswaPackage.MahasiswaService('localhost:3000', grpc.credentials.createInsecure());
 
-// const id_mahasiswa = '';
-// const nama = 'Abdul Zaki Syahrul Rahmat';
-// const nrp = '5027211020';
-// const nilai = '86';
+const rl = readline.createInterface({
+  input: process.stdin,
+  output: process.stdout
+});
 
-// client.AddMahasiswa({ id_mahasiswa, nama, nrp, nilai }, (err, response) => {
-//   if (err) {
-//     console.error(err);
-//     return;
-//   }
-// });
-
-const id_mahasiswa = 24;
-const request = { id_mahasiswa: id_mahasiswa };
-
-client.GetMahasiswa(request, (err, response) => {
-    if (err) {
-      console.error(err);
-      return;
-    }
-    console.log(response);
-  });
-
-  
-// const mahasiswaId = { id_mahasiswa: 1 };
-
-// client.DeleteMahasiswa({ id_mahasiswa }, (error, response) => {
-//   if (error) {
-//     console.error(error);
-//     return;
-//   }
-//   console.log(response.message);
-// });
-
-  // console.log(response.message);
+rl.question('Choose a function to call (ADD/GET/UPDATE/DELETE): ', function(functionName) {
+  if (functionName === 'ADD') {
+    rl.question('Enter the Mahasiswa details in this format: nama,nrp,nilai\n', function(mahasiswaInput) {
+      const [ nama, nrp, nilai] = mahasiswaInput.split(',');
+      client.AddMahasiswa({ nama, nrp, nilai }, (err, response) => {
+        if (err) {
+          console.error(err);
+          return;
+        }
+        console.log(response.message);
+      });
+      rl.close();
+    });
+  } else if (functionName === 'GET') {
+    rl.question('Enter the nama of the Mahasiswa: ', function(nama) {
+      client.GetMahasiswa({ nama }, (err, response) => {
+        if (err) {
+          console.error(err);
+          return;
+        }
+        console.log(response);
+      });
+      rl.close();
+    });
+  } else if (functionName === 'UPDATE') {
+    rl.question('Enter the Mahasiswa details in this format: nama,nilai\n', function(mahasiswaInput) {
+      const [ nama, nilai] = mahasiswaInput.split(',');
+      client.UpdateMahasiswa({ nama, nilai }, (err, response) => {
+        if (err) {
+          console.error(err);
+          return;
+        }
+        console.log(response.message);
+      });
+      rl.close();
+    });
+  } else if (functionName === 'DELETE') {
+    rl.question('Enter the nama of the Mahasiswa: ', function(nama) {
+      client.DeleteMahasiswa({ nama }, (err, response) => {
+        if (err) {
+          console.error(err);
+          return;
+        }
+        console.log(response.message);
+      });
+      rl.close();
+    });
+    } else {
+    console.error('Invalid function name. Please choose ADD, GET, or DELETE.');
+    rl.close();
+  }
+});

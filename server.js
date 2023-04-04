@@ -16,6 +16,8 @@ server.addService(MahasiswaPackage.MahasiswaService.service, {
     const nama = call.request.nama;
     const nrp = call.request.nrp;
     const nilai = call.request.nilai;
+
+    console.log(`Received POST request for nama = ${nama}`);
   
     connection.query(
       `INSERT INTO mahasiswa (id_mahasiswa, nama, nrp, nilai) VALUES (?, ?, ?, ?)`,
@@ -33,10 +35,11 @@ server.addService(MahasiswaPackage.MahasiswaService.service, {
   },
 
   GetMahasiswa(call, callback) {
-    const id_mahasiswa = call.request.id_mahasiswa;
+    const nama = call.request.nama;
+    console.log(`Received GET request for nama = ${nama}`);
     connection.query(
-      `SELECT * FROM mahasiswa WHERE id_mahasiswa = 9`,
-      [id_mahasiswa],
+      `SELECT * FROM mahasiswa WHERE nama = ?`,
+      [nama],
       (error, results) => {
         if (error) {
           console.error('Error:', error);
@@ -44,7 +47,7 @@ server.addService(MahasiswaPackage.MahasiswaService.service, {
           return;
         }
         if (results.length === 0) {
-          callback(`Mahasiswa dengan id ${id_mahasiswa} tidak ditemukan`, null);
+          callback(`Mahasiswa dengan nama ${nama} tidak ditemukan`, null);
           return;
         }
         const mahasiswa = results[0];
@@ -58,11 +61,15 @@ server.addService(MahasiswaPackage.MahasiswaService.service, {
     );
   },
 
-  DeleteMahasiswa(call, callback) {
-    const id_mahasiswa = call.request.id_mahasiswa;
+  UpdateMahasiswa(call, callback) {
+    const nama = call.request.nama;
+    const nilai = call.request.nilai;
+
+    console.log(`Received PUT request for nama = ${nama}`);
+
     connection.query(
-      `DELETE FROM mahasiswa WHERE id_mahasiswa = 24`,
-      [id_mahasiswa],
+      `UPDATE mahasiswa SET nilai = ? WHERE nama = ?`,
+      [nilai, nama],
       (error, results) => {
         if (error) {
           console.error('Error:', error);
@@ -70,10 +77,32 @@ server.addService(MahasiswaPackage.MahasiswaService.service, {
           return;
         }
         if (results.affectedRows === 0) {
-          callback(`Mahasiswa dengan id ${id_mahasiswa} tidak ditemukan`, null);
+          callback(`Mahasiswa dengan nama ${nama} tidak ditemukan`, null);
           return;
         }
-        callback(null, 'Mahasiswa dengan ${id_mahasiswa} berhasil dihapus');
+        callback(null, { message: 'Mahasiswa berhasil diupdate' });
+      }
+    );
+  },
+
+  DeleteMahasiswa(call, callback) {
+    const nama = call.request.nama;
+    console.log(`Received DELETE request for nama = ${nama}`);
+
+    connection.query(
+      `DELETE FROM mahasiswa WHERE nama = ?`,
+      [nama],
+      (error, results) => {
+        if (error) {
+          console.error('Error:', error);
+          callback(error, null);
+          return;
+        }
+        if (results.affectedRows === 0) {
+          callback(`Mahasiswa dengan nama ${nama} tidak ditemukan`, null);
+          return;
+        }
+        callback(null, `Mahasiswa dengan ${nama} berhasil dihapus`);
       }
     );
   }

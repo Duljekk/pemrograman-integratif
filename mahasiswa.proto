@@ -16,7 +16,12 @@ message MahasiswaList {
 }
 
 message MahasiswaId {
-  int32 id_mahasiswa = 1;
+  string nama = 2;
+}
+
+message MahasiswaUpdateRequest {
+  string nama = 1;
+  string nilai = 2;
 }
 
 message Empty {}
@@ -29,7 +34,7 @@ service MahasiswaService {
   rpc GetAll (Empty) returns (MahasiswaList) {}
   rpc GetMahasiswa (MahasiswaId) returns (Mahasiswa) {}
   // Update
-  rpc EditMahasiswa (Mahasiswa) returns (Mahasiswa) {}
+  rpc UpdateMahasiswa(MahasiswaUpdateRequest) returns (Mahasiswa) {}
   // Delete
   rpc DeleteMahasiswa (MahasiswaId) returns (Empty) {}
 }
