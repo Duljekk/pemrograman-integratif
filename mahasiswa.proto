@@ -31,7 +31,7 @@ service MahasiswaService {
   // Create 
   rpc AddMahasiswa (Mahasiswa) returns (Mahasiswa) {}
   // Read 
-  rpc GetAll (Empty) returns (MahasiswaList) {}
+  rpc GetAllMahasiswa (Empty) returns (MahasiswaList) {}
   rpc GetMahasiswa (MahasiswaId) returns (Mahasiswa) {}
   // Update
   rpc UpdateMahasiswa(MahasiswaUpdateRequest) returns (Mahasiswa) {}

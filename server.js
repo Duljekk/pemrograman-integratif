@@ -28,8 +28,7 @@ server.addService(MahasiswaPackage.MahasiswaService.service, {
           callback(error, null);
           return;
         }
-  
-        callback(null, {});
+        callback(null, `Mahasiswa dengan nama ${nama} berhasil ditambahkan`);
       }
     );
   },
@@ -63,6 +62,34 @@ server.addService(MahasiswaPackage.MahasiswaService.service, {
     );
   },
 
+  getAllMahasiswa(call, callback) {
+    console.log('Received GET request for all Mahasiswa');
+  
+    connection.query(
+      `SELECT * FROM mahasiswa`,
+      (error, results) => {
+        if (error) {
+          console.error('Error:', error);
+          callback(error, null);
+          return;
+        }
+        if (results.length === 0) {
+          callback(`Tidak ada Mahasiswa yang ditemukan`, null);
+          return;
+        }
+        const mahasiswaList = results.map((mahasiswa) => {
+          return {
+            id_mahasiswa: mahasiswa.id_mahasiswa,
+            nama: mahasiswa.nama,
+            nrp: mahasiswa.nrp,
+            nilai: mahasiswa.nilai
+          };
+        });
+        callback(null, { mahasiswa: mahasiswaList });
+      }
+    );
+  },
+
   UpdateMahasiswa(call, callback) {
     const nama = call.request.nama;
     const nilai = call.request.nilai;
@@ -82,7 +109,7 @@ server.addService(MahasiswaPackage.MahasiswaService.service, {
           callback(`Mahasiswa dengan nama ${nama} tidak ditemukan`, null);
           return;
         }
-        callback(null, {});
+        callback(null, `Mahasiswa dengan nama ${nama} berhasil dirubah`);
       }
     );
   },
@@ -105,7 +132,7 @@ server.addService(MahasiswaPackage.MahasiswaService.service, {
           callback(`Mahasiswa dengan nama ${nama} tidak ditemukan`, null);
           return;
         }
-        callback(null, {});
+        callback(null, {message: `Mahasiswa dengan nama ${nama} berhasil dihapus`});
       }
     );
   }

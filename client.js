@@ -14,7 +14,7 @@ const rl = readline.createInterface({
   output: process.stdout
 });
 
-rl.question('Choose a function to call (ADD/GET/UPDATE/DELETE): ', function(functionName) {
+rl.question('Choose a function to call (ADD/GET/GETALL/UPDATE/DELETE): ', function(functionName) {
   if (functionName === 'ADD') {
     rl.question('Enter the Mahasiswa details in this format: nama,nrp,nilai\n', function(mahasiswaInput) {
       const [ nama, nrp, nilai ] = mahasiswaInput.split(',');
@@ -23,7 +23,7 @@ rl.question('Choose a function to call (ADD/GET/UPDATE/DELETE): ', function(func
           console.error(err);
           return;
         }
-        console.log(response.message);
+        console.log(response);
       });
       rl.close();
     });
@@ -46,10 +46,19 @@ rl.question('Choose a function to call (ADD/GET/UPDATE/DELETE): ', function(func
           console.error(err);
           return;
         }
-        console.log(response.message);
+        console.log(response);
       });
       rl.close();
     });
+  } else if (functionName === 'GETALL') { 
+      client.getAllMahasiswa({}, (err, response) => {
+        if (err) {
+          console.error(err);
+          return;
+        }
+        console.log(response);
+      });
+      rl.close(); 
   } else if (functionName === 'DELETE') {
     rl.question('Enter the nama of the Mahasiswa: ', function(nama) {
       client.DeleteMahasiswa({ nama }, (err, response) => {
@@ -57,7 +66,7 @@ rl.question('Choose a function to call (ADD/GET/UPDATE/DELETE): ', function(func
           console.error(err);
           return;
         }
-        console.log(response.message);
+        console.log(response);
       });
       rl.close();
     });
